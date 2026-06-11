@@ -38,6 +38,7 @@ nav {
 
 nav ul {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     gap: 1.5rem;
 }
@@ -191,6 +192,46 @@ main {
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 0.25rem 0.6rem;
+}
+
+/* experience + education */
+
+.experience,
+.education {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.experience h2,
+.education h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.entry {
+    margin-bottom: 1.25rem;
+}
+
+.entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem;
+}
+
+.entry-head h3 {
+    font-size: 1rem;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.entry p {
+    color: var(--text-light);
+    margin-top: 0.5rem;
 }
 
 /* footer */
