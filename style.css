@@ -234,6 +234,25 @@ main {
     margin-top: 0.5rem;
 }
 
+/* contact */
+
+.contact {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.contact h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.contact p {
+    color: var(--text-light);
+    max-width: 480px;
+    margin-bottom: 1rem;
+}
+
 /* footer */
 
 footer {
