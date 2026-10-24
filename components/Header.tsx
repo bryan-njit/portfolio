@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 const links = ["About", "Projects", "Skills", "Experience", "Education", "Contact"];
 
 export default function Header() {
-  // which chapter of the 3D story is on screen. each chapter is one screen tall
+  // which chapter of the 3D story is on screen
   const [chapter, setChapter] = useState(0);
 
   useEffect(() => {
     function onScroll() {
-      setChapter(Math.min(Math.round(window.scrollY / window.innerHeight), 4));
+      const chapterHeight = document.getElementById("ch1")!.offsetHeight;
+      setChapter(Math.min(Math.round(window.scrollY / chapterHeight), 4));
     }
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);

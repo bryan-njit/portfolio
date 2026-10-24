@@ -284,10 +284,14 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
     lastX = e.clientX;
   }, { signal: events.signal });
   canvas.addEventListener("pointerup", () => (dragging = false), { signal: events.signal });
+  // the browser took over the touch to scroll the page, so we never get a pointerup
+  canvas.addEventListener("pointercancel", () => (dragging = false), { signal: events.signal });
 
   function resize() {
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    // tall phone screens get a wider view so the bat in the sky stays in frame
+    camera.fov = camera.aspect < 1 ? 46 : 32;
     camera.updateProjectionMatrix();
   }
   window.addEventListener("resize", resize, { signal: events.signal });
@@ -303,9 +307,13 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
   let throwDist = 8.5;
   let frameId = 0;
 
+  // the box the canvas sits in is exactly one chapter tall. window.innerHeight isn't on phones,
+  // because it shrinks while the address bar is showing
+  const stage = canvas.parentElement!;
+
   function frame(now: number) {
-    // s = which chapter we're on, 0 is the first one. each chapter is one screen tall
-    const s = Math.min(window.scrollY / window.innerHeight, 4);
+    // s = which chapter we're on, 0 is the first one
+    const s = Math.min(window.scrollY / stage.clientHeight, 4);
     const explode = clamp01(1 - Math.abs(s - 2) * 1.6);
     const on = clamp01((s - 2.6) / 0.6);
     const last = clamp01(s - 3);
