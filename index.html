@@ -13,6 +13,12 @@
     <header>
         <nav>
             <a href="#top" class="logo">Bryan Muhia</a>
+            <div class="dots">
+                <a href="#ch1">01</a>
+                <a href="#ch2">02</a>
+                <a href="#ch3">03</a>
+                <a href="#ch4">04</a>
+            </div>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -27,6 +33,7 @@
     <section class="story" id="top">
         <div class="stage">
             <canvas id="signal" role="img" aria-label="3D model of a Bat-Signal"></canvas>
+            <div class="labels" aria-hidden="true"><svg></svg></div>
             <div class="stage-tools">
                 <button id="replay" type="button">&#8635; Replay build</button>
                 <span>Drag to rotate</span>
@@ -34,7 +41,7 @@
         </div>
 
         <div class="chapters">
-            <div class="chapter">
+            <div class="chapter" id="ch1">
                 <p class="eyebrow">01 / Hello</p>
                 <h1>Good evening.<br>Welcome to my page.</h1>
                 <p>
@@ -47,6 +54,35 @@
                     <a href="mailto:bm564@njit.edu">Email</a>
                     <a href="#" target="_blank" rel="noopener">Resume</a>
                 </div>
+            </div>
+
+            <div class="chapter" id="ch2">
+                <p class="eyebrow">02 / About</p>
+                <h2>Student by day.</h2>
+                <p>
+                    Master Bryan studies computer science at NJIT. In his spare
+                    hours he takes what he learns in class and turns it into
+                    projects that actually run.
+                </p>
+            </div>
+
+            <div class="chapter" id="ch3">
+                <p class="eyebrow">03 / Process</p>
+                <h2>Every part has a job.</h2>
+                <p>
+                    Much like this old lamp. An app is a stack of parts, the
+                    interface, the logic and the data, and he builds each one
+                    so they work together.
+                </p>
+            </div>
+
+            <div class="chapter" id="ch4">
+                <p class="eyebrow">04 / What he builds</p>
+                <h2>Built for when the city calls.</h2>
+                <p>
+                    Dashboards, web apps and tools that people can rely on.
+                    Allow me to switch it on.
+                </p>
             </div>
         </div>
     </section>
