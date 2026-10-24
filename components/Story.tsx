@@ -35,15 +35,19 @@ export default function Story() {
   const replay = useRef(() => {});
 
   useEffect(() => {
-    const scene = createSignalScene({
-      canvas: canvasRef.current!,
-      labelBox: labelsRef.current!,
-      cityLines: cityLinesRef.current!,
-      cityLinks: linkRefs.current,
-      aim,
-    });
-    replay.current = scene.replay;
-    return scene.destroy;
+    try {
+      const scene = createSignalScene({
+        canvas: canvasRef.current!,
+        labelBox: labelsRef.current!,
+        cityLines: cityLinesRef.current!,
+        cityLinks: linkRefs.current,
+        aim,
+      });
+      replay.current = scene.replay;
+      return scene.destroy;
+    } catch {
+      // no WebGL on this computer, so the page just shows without the 3D part
+    }
   }, []);
 
   return (
@@ -111,7 +115,6 @@ export default function Story() {
             <a href="https://github.com/bryan-njit" target="_blank" rel="noopener" className="hover:underline">GitHub</a>
             <a href="https://www.linkedin.com/in/bryanmuhia/" target="_blank" rel="noopener" className="hover:underline">LinkedIn</a>
             <a href="mailto:bm564@njit.edu" className="hover:underline">Email</a>
-            <a href="#" target="_blank" rel="noopener" className="hover:underline">Resume</a>
           </div>
         </Chapter>
 

@@ -26,7 +26,7 @@ export const projects = [
 
 export const skills = [
   { group: "Languages", items: ["Python", "Java", "Kotlin", "JavaScript", "TypeScript", "C", "C++", "SQL"] },
-  { group: "Frameworks", items: ["React", "Next.js", "Tailwind CSS", "Leaflet.js", "Recharts", "three.js"] },
+  { group: "Frameworks", items: ["React", "Next.js", "Tailwind CSS", "Leaflet.js", "Recharts"] },
   { group: "Tools", items: ["Android Studio", "Claude API", "Claude Code", "Git", "GitHub", "MySQL"] },
 ];
 

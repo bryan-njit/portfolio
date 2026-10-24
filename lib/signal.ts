@@ -269,7 +269,7 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
 
   // removes every event listener at once when the page is done with the scene
   const events = new AbortController();
-  let yaw = 0;
+  let dragYaw = 0; // how far you've spun it with the mouse
   let dragging = false;
   let lastX = 0;
 
@@ -280,7 +280,7 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
   }, { signal: events.signal });
   canvas.addEventListener("pointermove", (e) => {
     if (!dragging) return;
-    yaw += (e.clientX - lastX) * 0.01;
+    dragYaw += (e.clientX - lastX) * 0.01;
     lastX = e.clientX;
   }, { signal: events.signal });
   canvas.addEventListener("pointerup", () => (dragging = false), { signal: events.signal });
@@ -328,7 +328,7 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
     throwDist = lerp(throwDist, targetDist, 0.1);
 
     const sway = reduceMotion ? 0 : Math.sin(now / 3000) * 0.08;
-    signal.rotation.y = aimYaw + yaw + sway;
+    signal.rotation.y = aimYaw + dragYaw + sway;
     head.rotation.x = aimTilt;
 
     // the skyline comes up from below in the last chapter
@@ -354,7 +354,7 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
     renderer.render(scene, camera);
 
     labelBox.style.opacity = String(clamp01(1 - (s - 2.3) / 0.4));
-    updateLabels();
+    if (s < 2.7) updateLabels(); // they're faded out after this
     cityLines.style.opacity = String(clamp01((last - 0.6) / 0.4));
     if (last > 0) updateCityLines();
 
