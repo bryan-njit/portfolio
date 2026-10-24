@@ -312,8 +312,14 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
   const stage = canvas.parentElement!;
 
   function frame(now: number) {
+    frameId = requestAnimationFrame(frame);
+
+    // the story is 5 chapters tall. past that the scene is off screen, so skip the drawing
+    const progress = window.scrollY / stage.clientHeight;
+    if (progress > 5) return;
+
     // s = which chapter we're on, 0 is the first one
-    const s = Math.min(window.scrollY / stage.clientHeight, 4);
+    const s = Math.min(progress, 4);
     const explode = clamp01(1 - Math.abs(s - 2) * 1.6);
     const on = clamp01((s - 2.6) / 0.6);
     const last = clamp01(s - 3);
@@ -365,8 +371,6 @@ export function createSignalScene({ canvas, labelBox, cityLines, cityLinks, aim 
     if (s < 2.7) updateLabels(); // they're faded out after this
     cityLines.style.opacity = String(clamp01((last - 0.6) / 0.4));
     if (last > 0) updateCityLines();
-
-    frameId = requestAnimationFrame(frame);
   }
   frameId = requestAnimationFrame(frame);
 
