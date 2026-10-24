@@ -39,13 +39,20 @@ h3 {
 
 /* nav */
 
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: linear-gradient(var(--bg) 40%, transparent);
+}
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 6vw;
 }
 
 .logo {
@@ -77,7 +84,109 @@ nav ul a:hover {
     color: var(--accent);
 }
 
-/* intro */
+/* story: the signal stays pinned while the chapters scroll past it */
+
+.story {
+    position: relative;
+}
+
+.stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 68% 35%, #19202a 0%, var(--bg) 65%);
+}
+
+#signal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 64%;
+    height: 100%;
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+#signal.dragging {
+    cursor: grabbing;
+}
+
+.stage-tools {
+    position: absolute;
+    right: 6vw;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+}
+
+.stage-tools button {
+    font: inherit;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+}
+
+.stage-tools button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.chapters {
+    position: relative;
+    margin-top: -100vh;
+    width: 42%;
+    padding-left: 6vw;
+}
+
+.chapter {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 0.6rem;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: middle;
+}
+
+.chapter h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    margin-bottom: 1rem;
+}
+
+.chapter p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 420px;
+    margin-bottom: 1.5rem;
+}
 
 main {
     max-width: 720px;
@@ -85,17 +194,8 @@ main {
     padding: 4rem 1rem;
 }
 
-.intro h1 {
-    font-size: 3rem;
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
-}
-
-.intro p {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    max-width: 480px;
-    margin-bottom: 1.5rem;
+main section {
+    scroll-margin-top: 5rem;
 }
 
 .links {
@@ -268,10 +368,6 @@ footer {
 /* mobile */
 
 @media (max-width: 480px) {
-    .intro h1 {
-        font-size: 2.25rem;
-    }
-
     nav ul {
         gap: 1rem;
     }

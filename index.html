@@ -12,7 +12,7 @@
 <body>
     <header>
         <nav>
-            <a href="/" class="logo">Bryan Muhia</a>
+            <a href="#top" class="logo">Bryan Muhia</a>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -24,20 +24,34 @@
         </nav>
     </header>
 
-    <main>
-        <section class="intro">
-            <h1>Bryan Muhia</h1>
-            <p>
-                Computer science student at NJIT looking for
-                software engineering internship opportunities.
-            </p>
-            <div class="links">
-                <a href="https://github.com/bryan-njit" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://www.linkedin.com/in/bryanmuhia/" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="mailto:bm564@njit.edu">Email</a>
-                <a href="#" target="_blank" rel="noopener">Resume</a>
+    <section class="story" id="top">
+        <div class="stage">
+            <canvas id="signal" role="img" aria-label="3D model of a Bat-Signal"></canvas>
+            <div class="stage-tools">
+                <button id="replay" type="button">&#8635; Replay build</button>
+                <span>Drag to rotate</span>
             </div>
-        </section>
+        </div>
+
+        <div class="chapters">
+            <div class="chapter">
+                <p class="eyebrow">01 / Hello</p>
+                <h1>Good evening.<br>Welcome to my page.</h1>
+                <p>
+                    I'm Alfred. Scroll with me and I'll introduce you to
+                    Master Bryan and the things he builds.
+                </p>
+                <div class="links">
+                    <a href="https://github.com/bryan-njit" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.linkedin.com/in/bryanmuhia/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="mailto:bm564@njit.edu">Email</a>
+                    <a href="#" target="_blank" rel="noopener">Resume</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
 
         <section id="about" class="about">
             <h2>About</h2>
@@ -159,5 +173,10 @@
     <footer>
         <p>&copy; 2026 Bryan Muhia</p>
     </footer>
+
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    </script>
+    <script type="module" src="signal.js"></script>
 </body>
 </html>
