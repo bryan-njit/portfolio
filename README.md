@@ -1,14 +1,7 @@
-# portfolio
+# Portfolio
 
-Personal portfolio website.
+My personal portfolio website, built around a Batman theme.
+
+A 3D Bat-Signal builds itself while Alfred introduces me, then the page moves into my projects, skills, experience, and education.
 
 Built with Next.js, TypeScript, Tailwind CSS, and three.js.
-
-## Running it
-
-Needs Node 20.9 or newer (`nvm use 24.21.0`).
-
-```
-npm install
-npm run dev
-```
