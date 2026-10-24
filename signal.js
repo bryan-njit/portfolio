@@ -4,7 +4,8 @@ const YELLOW = 0xf2c230;
 const canvas = document.getElementById("signal");
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// phones get a lower resolution so the frame rate stays smooth
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 800 ? 1.5 : 2));
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -349,7 +350,7 @@ function frame(now) {
     head.rotation.x = aimTilt;
 
     // the skyline comes up from below in the last chapter
-    city.position.y = lerp(-14, -3, 1 - Math.pow(1 - last, 3));
+    city.position.y = lerp(-22, -3, 1 - Math.pow(1 - last, 3));
 
     camera.position.set(0, lerp(lerp(2.4, 3.2, on), 4, last), lerp(lerp(10, 15, on), 18, last));
     lookAt.set(0, lerp(lerp(1.4, 3.4, on), 2.2, last), lerp(lerp(0, -2, on), -5, last));

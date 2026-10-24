@@ -240,6 +240,22 @@ nav ul a:hover {
     color: var(--text-light);
 }
 
+.sound {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+}
+
+.sound[aria-pressed="true"] {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 .dots {
     display: flex;
     gap: 0.75rem;
@@ -483,7 +499,37 @@ footer {
     font-size: 0.875rem;
 }
 
-/* mobile */
+/* mobile: signal on top, chapter text at the bottom of each screen */
+
+@media (max-width: 800px) {
+    .dots,
+    nav ul,
+    .labels,
+    .city-lines,
+    .stage-tools {
+        display: none;
+    }
+
+    #signal {
+        top: 6vh;
+        width: 100%;
+        height: 55%;
+    }
+
+    .chapters {
+        width: 100%;
+        padding: 0 1.25rem;
+    }
+
+    .chapter {
+        justify-content: flex-end;
+        padding-bottom: 6vh;
+    }
+
+    .chapter p {
+        font-size: 1rem;
+    }
+}
 
 @media (max-width: 480px) {
     nav ul {
