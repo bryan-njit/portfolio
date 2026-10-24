@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-night: #0b0d10;
+  --color-panel: #12161b;
+  --color-ink: #e8e4d9;
+  --color-muted: #8d929b;
+  --color-accent: #f2c230;
+  --color-line: #222830;
+}
+
+@theme inline {
+  --font-sans: var(--font-barlow);
+  --font-display: var(--font-barlow-condensed);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-night);
+}
+
+/* leader lines drawn from lib/signal.ts */
+.leaders line {
+  stroke: var(--color-muted);
+}
+
+.leaders circle {
+  fill: var(--color-accent);
+}
+
+.city-lines line {
+  stroke-dasharray: 3 4;
+}
+
+.city-lines line.lit {
+  stroke: var(--color-accent);
+  stroke-dasharray: none;
+}

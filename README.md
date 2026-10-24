@@ -2,4 +2,4 @@
 
 Personal portfolio website.
 
-Built with HTML, CSS, and JavaScript.
+Built with Next.js, TypeScript, Tailwind CSS, and three.js.
