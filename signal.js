@@ -147,6 +147,70 @@ const sky = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), skyMat);
 sky.renderOrder = 1; // draw over the beam so the bat shadow stays dark
 scene.add(sky);
 
+// gotham skyline for the last chapter. the first 4 buildings go with the menu links
+scene.fog = new THREE.Fog(0x0b0d10, 16, 36);
+const city = new THREE.Group();
+scene.add(city);
+const cityMat = new THREE.MeshStandardMaterial({ color: 0x1a1f26, roughness: 0.9 });
+const buildings = [];
+
+function addBuilding(x, z, w, h) {
+    const geo = new THREE.BoxGeometry(w, h, w);
+    const b = new THREE.Mesh(geo, cityMat);
+    b.position.set(x, h / 2, z);
+    b.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat));
+    b.userData.height = h;
+    city.add(b);
+    buildings.push(b);
+}
+
+addBuilding(-5.2, -8.5, 1.4, 6.5);
+addBuilding(-2, -9.5, 1.5, 8.5);
+addBuilding(2.6, -8.5, 1.4, 7.2);
+addBuilding(5.6, -8, 1.3, 5.8);
+for (let i = 0; i < 16; i++) {
+    addBuilding(-10 + i * 1.35, -11 - (i % 3) * 1.2, 0.9 + Math.random() * 0.6, 4 + Math.random() * 5);
+}
+
+// lines from the menu links to their buildings
+const cityLinks = document.querySelectorAll(".city-links a");
+const cityLines = document.querySelector(".city-lines");
+const linkLines = [];
+let aim = -1; // which building the light is on, -1 = the sky
+
+cityLinks.forEach((a, i) => {
+    a.addEventListener("mouseenter", () => (aim = i));
+    a.addEventListener("mouseleave", () => (aim = -1));
+    a.addEventListener("focus", () => (aim = i));
+    a.addEventListener("blur", () => (aim = -1));
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("r", 3);
+    cityLines.append(line, dot);
+    linkLines.push({ line, dot });
+});
+
+function updateCityLines() {
+    const box = cityLines.getBoundingClientRect();
+    cityLinks.forEach((a, i) => {
+        const r = a.getBoundingClientRect();
+        const b = buildings[i];
+        v.set(0, b.userData.height / 2, 0);
+        b.localToWorld(v).project(camera);
+        const x = canvas.offsetLeft + (v.x + 1) / 2 * canvas.clientWidth;
+        const y = (1 - v.y) / 2 * canvas.clientHeight;
+        const { line, dot } = linkLines[i];
+        line.setAttribute("x1", r.right - box.left + 12);
+        line.setAttribute("y1", r.top + r.height / 2 - box.top);
+        line.setAttribute("x2", x);
+        line.setAttribute("y2", y);
+        line.classList.toggle("lit", aim === i);
+        dot.setAttribute("cx", x);
+        dot.setAttribute("cy", y);
+    });
+}
+
 // build animation. spread pushes the parts apart for the exploded view
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let buildStart = reduceMotion ? -1 : performance.now();
@@ -250,22 +314,45 @@ resize();
 const lookAt = new THREE.Vector3();
 const dir = new THREE.Vector3();
 const q = new THREE.Quaternion();
+let aimYaw = 0.5;
+let aimTilt = -0.55;
+let throwDist = 8.5;
 
 function frame(now) {
     // s = which chapter we're on, 0 is the first one. each chapter is one screen tall
     const s = Math.min(window.scrollY / window.innerHeight, 4);
     const explode = clamp01(1 - Math.abs(s - 2) * 1.6);
     const on = clamp01((s - 2.6) / 0.6);
+    const last = clamp01(s - 3);
 
     dots.forEach((d, i) => d.classList.toggle("active", Math.round(s) === i));
 
     // turns a bit as you scroll, then swings around to point at the sky
-    const sway = reduceMotion ? 0 : Math.sin(now / 3000) * 0.08;
-    signal.rotation.y = lerp(0.5 + s * 0.4, Math.PI + 0.35, on) + yaw + sway;
-    head.rotation.x = lerp(-0.55, -0.45, on);
+    let targetYaw = lerp(0.5 + s * 0.4, Math.PI + 0.35, on);
+    let targetTilt = lerp(-0.55, -0.45, on);
+    let targetDist = 8.5;
+    const lit = last > 0.5 ? aim : -1;
+    if (lit >= 0) {
+        // swing over to the building for the hovered link
+        const b = buildings[lit];
+        const flat = Math.hypot(b.position.x, b.position.z);
+        targetYaw = Math.PI + Math.atan2(-b.position.x, -b.position.z);
+        targetTilt = -Math.atan2(b.userData.height - 1 + city.position.y - 1.9, flat);
+        targetDist = flat - 1;
+    }
+    aimYaw = lerp(aimYaw, targetYaw, 0.1);
+    aimTilt = lerp(aimTilt, targetTilt, 0.1);
+    throwDist = lerp(throwDist, targetDist, 0.1);
 
-    camera.position.set(0, lerp(2.4, 3.2, on), lerp(10, 15, on));
-    lookAt.set(0, lerp(1.4, 3.4, on), lerp(0, -2, on));
+    const sway = reduceMotion ? 0 : Math.sin(now / 3000) * 0.08;
+    signal.rotation.y = aimYaw + yaw + sway;
+    head.rotation.x = aimTilt;
+
+    // the skyline comes up from below in the last chapter
+    city.position.y = lerp(-14, -3, 1 - Math.pow(1 - last, 3));
+
+    camera.position.set(0, lerp(lerp(2.4, 3.2, on), 4, last), lerp(lerp(10, 15, on), 18, last));
+    lookAt.set(0, lerp(lerp(1.4, 3.4, on), 2.2, last), lerp(lerp(0, -2, on), -5, last));
     camera.lookAt(lookAt);
 
     updateParts(now, explode * 0.12);
@@ -277,13 +364,16 @@ function frame(now) {
     // put the symbol where the beam ends
     head.getWorldPosition(sky.position);
     dir.set(0, 0, 1).applyQuaternion(head.getWorldQuaternion(q));
-    sky.position.addScaledVector(dir, 8.5);
+    sky.position.addScaledVector(dir, throwDist);
     sky.lookAt(camera.position);
+    sky.scale.setScalar(lerp(sky.scale.x, lit >= 0 ? 0.4 : 1, 0.1));
 
     renderer.render(scene, camera);
 
     labelBox.style.opacity = clamp01(1 - (s - 2.3) / 0.4);
     updateLabels();
+    cityLines.style.opacity = clamp01((last - 0.6) / 0.4);
+    if (last > 0) updateCityLines();
 
     requestAnimationFrame(frame);
 }
