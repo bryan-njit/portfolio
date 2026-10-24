@@ -5,18 +5,36 @@
 }
 
 :root {
-    --text: #1a1a1a;
-    --text-light: #555;
-    --bg: #fafafa;
-    --accent: #2563eb;
-    --border: #e5e5e5;
+    --text: #e8e4d9;
+    --text-light: #8d929b;
+    --bg: #0b0d10;
+    --panel: #12161b;
+    --accent: #f2c230;
+    --border: #222830;
+    --mono: "IBM Plex Mono", monospace;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Barlow", -apple-system, "Segoe UI", sans-serif;
     color: var(--text);
     background: var(--bg);
     line-height: 1.6;
+}
+
+h1,
+h3 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--bg);
 }
 
 /* nav */
@@ -31,7 +49,11 @@ nav {
 }
 
 .logo {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.25rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     text-decoration: none;
     color: var(--text);
 }
@@ -44,12 +66,15 @@ nav ul {
 }
 
 nav ul a {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
     text-decoration: none;
     color: var(--text-light);
 }
 
 nav ul a:hover {
-    color: var(--text);
+    color: var(--accent);
 }
 
 /* intro */
@@ -61,7 +86,8 @@ main {
 }
 
 .intro h1 {
-    font-size: 2rem;
+    font-size: 3rem;
+    line-height: 1.1;
     margin-bottom: 0.75rem;
 }
 
@@ -87,18 +113,30 @@ main {
     text-decoration: underline;
 }
 
-/* about */
+/* shared section headings, styled like batcomputer file headers */
 
-.about {
+main section + section {
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--border);
 }
 
-.about h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
+main h2 {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
 }
+
+main h2::before {
+    content: "// ";
+    color: var(--text-light);
+}
+
+/* about */
 
 .about p {
     color: var(--text-light);
@@ -108,30 +146,28 @@ main {
 
 /* projects */
 
-.projects {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-.projects h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
 .project-list {
     display: grid;
     gap: 1rem;
 }
 
 .project {
+    position: relative;
     padding: 1.25rem;
-    background: #fff;
+    background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+.case-no {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
 }
 
 .project h3 {
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -148,33 +184,21 @@ main {
 }
 
 .tech li {
-    font-size: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
     color: var(--text-light);
-    background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 0.2rem 0.5rem;
 }
 
 /* skills */
-
-.skills {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-.skills h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
 
 .skill-group {
     margin-bottom: 1.25rem;
 }
 
 .skill-group h3 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: var(--text-light);
     margin-bottom: 0.5rem;
 }
@@ -188,26 +212,12 @@ main {
 
 .skill-list li {
     font-size: 0.85rem;
-    background: #fff;
+    background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 0.25rem 0.6rem;
 }
 
 /* experience + education */
-
-.experience,
-.education {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-.experience h2,
-.education h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
 
 .entry {
     margin-bottom: 1.25rem;
@@ -217,15 +227,17 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: baseline;
     gap: 0.25rem;
 }
 
 .entry-head h3 {
-    font-size: 1rem;
+    font-size: 1.25rem;
 }
 
 .date {
-    font-size: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
     color: var(--text-light);
 }
 
@@ -235,17 +247,6 @@ main {
 }
 
 /* contact */
-
-.contact {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-.contact h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-}
 
 .contact p {
     color: var(--text-light);
@@ -268,7 +269,7 @@ footer {
 
 @media (max-width: 480px) {
     .intro h1 {
-        font-size: 1.5rem;
+        font-size: 2.25rem;
     }
 
     nav ul {
