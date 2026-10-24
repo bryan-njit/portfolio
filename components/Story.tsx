@@ -45,8 +45,9 @@ export default function Story() {
       });
       replay.current = scene.replay;
       return scene.destroy;
-    } catch {
-      // no WebGL on this computer, so the page just shows without the 3D part
+    } catch (err) {
+      // usually no WebGL on this computer. the page still shows, just without the 3D part
+      console.warn("3D scene didn't start", err);
     }
   }, []);
 
