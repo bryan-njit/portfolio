@@ -60,7 +60,7 @@ export default function Story() {
           className="absolute top-[6vh] right-0 h-[55%] w-full cursor-grab touch-pan-y active:cursor-grabbing md:top-0 md:h-full md:w-[64%]"
         />
 
-        <div ref={labelsRef} aria-hidden="true" className="leaders pointer-events-none absolute inset-0 max-md:hidden">
+        <div ref={labelsRef} aria-hidden="true" className="leaders pointer-events-none absolute inset-0 opacity-0 max-md:hidden">
           <svg className="absolute inset-0 size-full">
             {PART_LABELS.map((l) => (
               <g key={l.title}>
